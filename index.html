@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>「看见压力」压力舒缓团体 · 报名</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: #faf3ea;
+      min-height: 100vh;
+      padding: 20px 16px;
+      color: #4a4a4a;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 6px 30px rgba(180, 150, 120, 0.12);
+    }
+    .banner {
+      background: linear-gradient(145deg, #d4a574 0%, #c9b5a0 50%, #b8c9b4 100%);
+      padding: 44px 28px 32px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+    .banner .deco {
+      font-size: 38px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .banner h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .banner .subtitle {
+      font-size: 14px;
+      opacity: 0.92;
+      line-height: 1.6;
+    }
+    .banner .meta-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .banner .meta-row span {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      backdrop-filter: blur(4px);
+    }
+    .intro {
+      padding: 24px 28px;
+      background: #fcf8f3;
+      border-bottom: 1px solid #f0e6d8;
+    }
+    .intro h3 {
+      font-size: 15px;
+      color: #b5896a;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .intro .items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .intro .items span {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.7;
+    }
+    .intro .notice {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #f7f0e8;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #8a7a6a;
+      line-height: 1.7;
+    }
+    .form-section {
+      padding: 8px 28px 28px;
+    }
+    .form-group {
+      margin-top: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .form-group label .required { color: #d4897b; margin-left: 2px; }
+    .form-group label .optional {
+      font-weight: 400; font-size: 12px; color: #bbb; margin-left: 6px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e8ddd0;
+      border-radius: 14px;
+      font-size: 15px;
+      color: #4a4a4a;
+      background: #fcfaf7;
+      transition: all 0.25s;
+      font-family: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #c9b5a0;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201, 181, 160, 0.15);
+    }
+    .form-group textarea { min-height: 80px; resize: vertical; }
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .radio-group label,
+    .checkbox-group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border: 1.5px solid #e8ddd0;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fcfaf7;
+    }
+    .radio-group input, .checkbox-group input { display: none; }
+    .radio-group label:has(input:checked),
+    .checkbox-group label:has(input:checked) {
+      border-color: #b8c9b4;
+      background: #f0f5ed;
+    }
+    .radio-group input:checked + span,
+    .checkbox-group input:checked + span { color: #6a8f70; }
+    .scale-group {
+      display: flex;
+      gap: 6px;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+    .scale-item { flex: 1; text-align: center; }
+    .scale-item input { display: none; }
+    .scale-item label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .scale-item .num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e8ddd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: #bbb;
+      transition: all 0.25s;
+      background: #fcfaf7;
+    }
+    .scale-item input:checked + label .num {
+      border-color: #b8c9b4;
+      background: #b8c9b4;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(184, 201, 180, 0.3);
+    }
+    .scale-item .label-text { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #d4a574, #c9b5a0);
+      border: none;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 14px rgba(212, 165, 116, 0.25);
+    }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212, 165, 116, 0.3); }
+    .submit-btn:active { transform: scale(0.97); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .agreement-text {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .divider { height: 1px; background: #f0e6d8; margin: 22px 0; }
+    .success-msg { display: none; text-align: center; padding: 60px 28px; }
+    .success-msg .icon { font-size: 56px; margin-bottom: 14px; }
+    .success-msg h2 { font-size: 20px; color: #b5896a; margin-bottom: 8px; }
+    .success-msg p { font-size: 14px; color: #999; line-height: 1.8; }
+    .footer { padding: 16px 28px 24px; text-align: center; }
+    .footer p { font-size: 12px; color: #ccc; }
+  </style>
+</head>
+<body>
+  <div class="container" id="formContainer">
+    <div class="banner">
+      <span class="deco">🍃</span>
+      <h1>「看见压力」</h1>
+      <div class="subtitle">北京师范大学心理博士带领<br>压力舒缓团体工作坊</div>
+      <div class="meta-row">
+        <span>📅 7月5日 周日</span>
+        <span>🕐 16:00-18:00</span>
+        <span>📍 北师大东门</span>
+        <span>💰 限时免费</span>
+      </div>
+    </div>
+
+    <div class="intro">
+      <h3>🍃 给自己一个停下来的理由</h3>
+      <div class="items">
+        <span>🌱 觉察压力 — 看见被忽视的情绪信号</span>
+        <span>💫 释放压力 — 在安全的空间里流动</span>
+        <span>🧘 找回平静 — 给心灵一个呼吸的空间</span>
+      </div>
+      <div class="notice">
+        ⚠️ 小团体制（6-12人），私密安全 · 成长体验团体，非心理治疗<br>
+        请全程参与 · 🚰 请自带水杯，提供饮用水
+      </div>
+    </div>
+
+    <form class="form-section" id="regForm" onsubmit="return handleSubmit(event)">
+      <div class="form-group">
+        <label>您的姓名 <span class="required">*</span></label>
+        <input type="text" name="name" placeholder="请填写您的姓名" required>
+      </div>
+      <div class="form-group">
+        <label>手机号 <span class="required">*</span></label>
+        <input type="tel" name="phone" placeholder="用于联系" required pattern="1\d{10}">
+      </div>
+      <div class="form-group">
+        <label>微信号 <span class="required">*</span></label>
+        <input type="text" name="wechat" placeholder="方便拉活动群" required>
+      </div>
+      <div class="form-group">
+        <label>性别 <span class="required">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="男" required><span>男</span></label>
+          <label><input type="radio" name="gender" value="女"><span>女</span></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>年龄段 <span class="required">*</span></label>
+        <select name="age" required>
+          <option value="">请选择</option>
+          <option value="20岁以下">20岁以下</option>
+          <option value="20-30岁">20-30岁</option>
+          <option value="31-40岁">31-40岁</option>
+          <option value="40岁以上">40岁以上</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>职业类型 <span class="required">*</span></label>
+        <select name="occupation" required>
+          <option value="">请选择</option>
+          <option value="学生">学生</option>
+          <option value="企业职员">企业职员</option>
+          <option value="自由职业">自由职业</option>
+          <option value="教育/科研">教育/科研</option>
+          <option value="医疗/健康">医疗/健康</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>你最近感到的压力程度如何？ <span class="required">*</span></label>
+        <div class="scale-group">
+          <div class="scale-item"><input type="radio" name="stress" id="s1" value="1" required><label for="s1"><span class="num">1</span><span class="label-text">很轻松</span></label></div>
+          <div class="scale-item"><input type="radio" name="stress" id="s2" value="2"><label for="s2"><span class="num">2</span><span class="label-text">较轻松</span></label></div>
+          <div class="scale-item"><input type="radio" name="stress" id="s3" value="3"><label for="s3"><span class="num">3</span><span class="label-text">一般</span></label></div>
+          <div class="scale-item"><input type="radio" name="stress" id="s4" value="4"><label for="s4"><span class="num">4</span><span class="label-text">比较大</span></label></div>
+          <div class="scale-item"><input type="radio" name="stress" id="s5" value="5"><label for="s5"><span class="num">5</span><span class="label-text">非常大</span></label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>主要的压力来源 <span class="required">*</span> <span class="optional">（可多选）</span></label>
+        <div class="radio-group">
+          <label><input type="checkbox" name="source" value="工作/学业"><span>工作/学业</span></label>
+          <label><input type="checkbox" name="source" value="经济压力"><span>经济压力</span></label>
+          <label><input type="checkbox" name="source" value="家庭关系"><span>家庭关系</span></label>
+          <label><input type="checkbox" name="source" value="人际关系"><span>人际关系</span></label>
+          <label><input type="checkbox" name="source" value="健康问题"><span>健康问题</span></label>
+          <label><input type="checkbox" name="source" value="其他"><span>其他</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>是否参加过心理团辅？ <span class="required">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="experience" value="参加过" required><span>参加过</span></label>
+          <label><input type="radio" name="experience" value="未参加过"><span>未参加过</span></label>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="form-group">
+        <label>是否有心理/精神科诊断史 <span class="optional">（选填，严格保密）</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="diagnosis" value="有"><span>有</span></label>
+          <label><input type="radio" name="diagnosis" value="无"><span>无</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>对本次活动的期待 <span class="optional">（选填）</span></label>
+        <textarea name="expectation" placeholder="例如：最近工作压力大，想学习放松方法…"></textarea>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="form-group">
+        <label>是否同意活动拍照/录像用于内部记录？ <span class="required">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="photo" value="同意" required><span>同意</span></label>
+          <label><input type="radio" name="photo" value="不同意"><span>不同意</span></label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>保密协议 <span class="required">*</span></label>
+        <p style="font-size:13px;color:#aaa;margin-bottom:8px;line-height:1.6;">
+          👉 <a href="协议.html" target="_blank" style="color:#b5896a;font-weight:600;text-decoration:underline;">点击查看完整保密协议内容</a>
+        </p>
+        <div class="radio-group">
+          <label><input type="radio" name="agreement" value="同意" required><span>我已阅读并同意</span></label>
+          <label><input type="radio" name="agreement" value="不同意"><span>不同意</span></label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">提交报名</button>
+      <p class="agreement-text">提交后我们会通过微信与您确认</p>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <div class="icon">✨</div>
+      <h2>报名成功！</h2>
+      <p>感谢您的报名 🙏<br>我们将尽快通过微信与您联系确认<br>如有疑问请随时联系我们</p>
+    </div>
+
+    <div class="footer">
+      <p>🍃 给自己一个停下来的理由</p>
+    </div>
+  </div>
+
+  <script>
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('.submit-btn');
+      btn.disabled = true;
+      btn.textContent = '提交中…';
+
+      const sources = Array.from(document.querySelectorAll('input[name="source"]:checked')).map(cb => cb.value).join('、');
+
+      const data = {
+        name: form.name.value,
+        phone: form.phone.value,
+        wechat: form.wechat.value,
+        gender: form.gender.value,
+        age: form.age.value,
+        occupation: form.occupation.value,
+        stress: form.stress.value,
+        sources,
+        experience: form.experience.value,
+        diagnosis: document.querySelector('input[name="diagnosis"]:checked')?.value || '',
+        expectation: form.expectation.value || '',
+        photo: form.photo.value,
+        agreement: form.agreement.value
+      };
+
+      if (data.agreement !== '同意') { alert('请阅读并同意保密协议'); btn.disabled = false; btn.textContent = '提交报名'; return; }
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+          form.style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        } else {
+          alert(result.message || '提交失败');
+          btn.disabled = false;
+          btn.textContent = '提交报名';
+        }
+      } catch (err) {
+        alert('网络异常，请稍后重试');
+        btn.disabled = false;
+        btn.textContent = '提交报名';
+      }
+    }
+  </script>
+</body>
+</html>

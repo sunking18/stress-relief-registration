@@ -1,0 +1,14 @@
+{
+  "name": "stress-relief-registration",
+  "version": "1.0.0",
+  "description": "压力舒缓团体报名系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "json2csv": "^6.0.0-alpha.2"
+  }
+}

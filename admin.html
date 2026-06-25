@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 · 报名数据</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: #faf3ea;
+      min-height: 100vh;
+      padding: 20px 16px;
+      color: #4a4a4a;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    .header-banner {
+      background: linear-gradient(145deg, #d4a574 0%, #c9b5a0 50%, #b8c9b4 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .header-banner h1 { font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+    .header-banner p { font-size: 14px; opacity: 0.9; }
+    .header-right { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary { background: #fff; color: #b5896a; }
+    .btn-primary:hover { background: #f5ede4; }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: #fff; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); }
+    .btn-sm { padding: 6px 14px; font-size: 12px; border-radius: 8px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(180, 150, 120, 0.08);
+    }
+    .stat-card .num { font-size: 28px; font-weight: 700; color: #b5896a; }
+    .stat-card .label { font-size: 13px; color: #aaa; margin-top: 4px; }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(180, 150, 120, 0.08);
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 16px; color: #b5896a; margin-bottom: 16px; }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .search-bar input {
+      flex: 1;
+      min-width: 180px;
+      padding: 10px 14px;
+      border: 1.5px solid #e8ddd0;
+      border-radius: 12px;
+      font-size: 14px;
+      background: #fcfaf7;
+      font-family: inherit;
+    }
+    .search-bar input:focus { outline: none; border-color: #c9b5a0; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #aaa;
+      font-weight: 600;
+      border-bottom: 1px solid #f0e6d8;
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #555;
+      border-bottom: 1px solid #f5f0ea;
+      vertical-align: top;
+    }
+    tr:hover td { background: #fcf8f3; }
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      background: #f0f5ed;
+      color: #6a8f70;
+    }
+    .tag-warn { background: #fcf0e8; color: #b5896a; }
+    .empty-state { text-align: center; padding: 60px 20px; color: #ccc; }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 15px; }
+
+    .detail-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .detail-modal.show { display: flex; }
+    .detail-content {
+      background: #fff;
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .detail-content h3 { font-size: 18px; color: #b5896a; margin-bottom: 16px; }
+    .detail-content .field { margin-bottom: 10px; }
+    .detail-content .field .key { font-size: 12px; color: #bbb; margin-bottom: 2px; }
+    .detail-content .field .val { font-size: 14px; color: #555; line-height: 1.5; }
+    .detail-content .close-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      background: #f5ede4;
+      border: none;
+      border-radius: 12px;
+      color: #b5896a;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .operations { display: flex; gap: 6px; }
+    .link-btn { color: #b5896a; cursor: pointer; font-size: 13px; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-banner">
+      <div>
+        <h1>🍃 报名管理后台</h1>
+        <p>「看见压力」压力舒缓团体 · 实时报名数据</p>
+      </div>
+      <div class="header-right">
+        <a href="/api/export/csv" class="btn btn-primary">📥 导出 CSV</a>
+        <a href="/" class="btn btn-outline" target="_blank">🔗 报名页</a>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="num" id="totalCount">0</div>
+        <div class="label">总报名人数</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="maleCount">0</div>
+        <div class="label">男性</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="femaleCount">0</div>
+        <div class="label">女性</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="stressAvg">-</div>
+        <div class="label">平均压力值</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 报名列表</h2>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="搜索姓名、手机号、微信号…" oninput="renderTable()">
+      </div>
+      <div id="tableContainer">
+        <div class="empty-state">
+          <div class="icon">📭</div>
+          <p>暂无报名数据<br>分享报名链接后，这里会实时显示</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-modal" id="detailModal">
+    <div class="detail-content" id="detailContent"></div>
+  </div>
+
+  <script>
+    let allData = [];
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/submissions');
+        const json = await res.json();
+        if (json.success) {
+          allData = json.data;
+          updateStats();
+          renderTable();
+        }
+      } catch (e) {
+        console.error('加载数据失败', e);
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('totalCount').textContent = allData.length;
+      const males = allData.filter(d => d.gender === '男').length;
+      const females = allData.filter(d => d.gender === '女').length;
+      document.getElementById('maleCount').textContent = males;
+      document.getElementById('femaleCount').textContent = females;
+      const stressVals = allData.map(d => parseInt(d.stress)).filter(v => !isNaN(v));
+      const avg = stressVals.length ? (stressVals.reduce((a,b) => a+b, 0) / stressVals.length).toFixed(1) : '-';
+      document.getElementById('stressAvg').textContent = avg;
+    }
+
+    function renderTable() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      let filtered = allData;
+      if (q) {
+        filtered = allData.filter(d =>
+          d.name.toLowerCase().includes(q) ||
+          d.phone.includes(q) ||
+          (d.wechat && d.wechat.toLowerCase().includes(q))
+        );
+      }
+
+      const container = document.getElementById('tableContainer');
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>${allData.length === 0 ? '暂无报名数据' : '未找到匹配的报名记录'}</p></div>`;
+        return;
+      }
+
+      let html = `<div style="overflow-x:auto;"><table>
+        <thead><tr>
+          <th>#</th><th>姓名</th><th>手机号</th><th>性别</th><th>年龄段</th>
+          <th>压力</th><th>来源</th><th>提交时间</th><th>操作</th>
+        </tr></thead><tbody>`;
+      filtered.forEach(d => {
+        const stressNum = parseInt(d.stress);
+        const stressColor = stressNum <= 2 ? '#6a8f70' : stressNum <= 3 ? '#b5896a' : '#d4897b';
+        html += `<tr>
+          <td>${d.id}</td>
+          <td><strong>${d.name}</strong></td>
+          <td>${d.phone}</td>
+          <td>${d.gender}</td>
+          <td><span class="tag">${d.age}</span></td>
+          <td><span style="color:${stressColor};font-weight:600;">${stressNum}</span></td>
+          <td style="max-width:120px;font-size:12px;">${d.sources || '-'}</td>
+          <td style="font-size:12px;color:#aaa;">${d.submittedAt}</td>
+          <td><span class="link-btn" onclick="showDetail(${d.id})">详情</span></td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+      container.innerHTML = html;
+    }
+
+    function showDetail(id) {
+      const d = allData.find(item => item.id === id);
+      if (!d) return;
+      const fields = [
+        { k: '姓名', v: d.name },
+        { k: '手机号', v: d.phone },
+        { k: '微信号', v: d.wechat || '-' },
+        { k: '性别', v: d.gender },
+        { k: '年龄段', v: d.age },
+        { k: '职业', v: d.occupation },
+        { k: '压力程度', v: d.stress + '分' },
+        { k: '压力来源', v: d.sources || '-' },
+        { k: '团辅经历', v: d.experience },
+        { k: '诊断史', v: d.diagnosis || '-' },
+        { k: '活动期待', v: d.expectation || '-' },
+        { k: '拍照授权', v: d.photo },
+        { k: '提交时间', v: d.submittedAt }
+      ];
+      let html = `<h3>📋 报名详情 · #${d.id}</h3>`;
+      fields.forEach(f => {
+        html += `<div class="field"><div class="key">${f.k}</div><div class="val">${f.v}</div></div>`;
+      });
+      html += `<button class="close-btn" onclick="closeDetail()">关闭</button>`;
+      document.getElementById('detailContent').innerHTML = html;
+      document.getElementById('detailModal').classList.add('show');
+    }
+
+    function closeDetail() {
+      document.getElementById('detailModal').classList.remove('show');
+    }
+
+    document.getElementById('detailModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeDetail();
+    });
+
+    // 每10秒自动刷新
+    loadData();
+    setInterval(loadData, 10000);
+  </script>
+</body>
+</html>
